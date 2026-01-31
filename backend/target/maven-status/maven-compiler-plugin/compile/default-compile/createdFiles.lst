@@ -1,2 +1,4 @@
 com\myproject\MyprojectApplication.class
+com\myproject\Message.class
+com\myproject\MessageRepository.class
 com\myproject\HelloController.class
