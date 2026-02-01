@@ -1,6 +1,10 @@
 # fly.toml - replace "myproject" with your Fly app name (e.g. "thingy") via: fly apps create <name> or fly launch
 app = "thingylingie"
 
+[vm]
+  size = "shared-cpu-1x"
+  memory = "512mb"
+
 [http_service]
   internal_port = 8080
   force_https = true
