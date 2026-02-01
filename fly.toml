@@ -1,8 +1,6 @@
 # fly.toml - replace "myproject" with your Fly app name (e.g. "thingy") via: fly apps create <name> or fly launch
 app = "thingylingie"
 
-[build]
-
 [http_service]
   internal_port = 8080
   force_https = true
