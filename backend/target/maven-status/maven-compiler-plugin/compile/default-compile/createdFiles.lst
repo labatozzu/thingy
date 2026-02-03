@@ -1,4 +1,11 @@
-com\myproject\MyprojectApplication.class
-com\myproject\Message.class
+com\myproject\BcryptHashGenerator.class
+com\myproject\AppUserDetailsService.class
 com\myproject\MessageRepository.class
+com\myproject\MyprojectApplication.class
+com\myproject\UserRepository.class
+com\myproject\Message.class
+com\myproject\AuthController.class
+com\myproject\DefaultProfileWhenProdHasNoDb.class
+com\myproject\SecurityConfig.class
+com\myproject\User.class
 com\myproject\HelloController.class
