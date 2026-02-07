@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { getCsrfToken } from '../composables/useCsrf'
+import { useAuth } from '../composables/useAuth'
 
 const email = ref('')
 const password = ref('')
@@ -9,6 +10,7 @@ const error = ref('')
 const loading = ref(false)
 const csrfToken = ref('')
 const router = useRouter()
+const { fetchMe } = useAuth()
 
 async function submit() {
   error.value = ''
@@ -24,6 +26,7 @@ async function submit() {
       body: body.toString(),
     })
     if (res.ok) {
+      await fetchMe()
       router.push('/')
     } else {
       error.value = 'Invalid email or password'

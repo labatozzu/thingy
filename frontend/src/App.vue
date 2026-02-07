@@ -1,31 +1,10 @@
 <script setup>
-import { ref, onMounted, watch } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import { getCsrfToken } from './composables/useCsrf'
+import { onMounted, watch } from 'vue'
+import { useRoute } from 'vue-router'
+import { useAuth } from './composables/useAuth'
 
 const route = useRoute()
-const router = useRouter()
-const user = ref(null)
-
-async function fetchMe() {
-  const res = await fetch('/api/me', { credentials: 'include' })
-  if (res.ok) {
-    user.value = await res.json()
-  } else {
-    user.value = null
-  }
-}
-
-async function logout() {
-  const token = await getCsrfToken()
-  await fetch('/logout', {
-    method: 'POST',
-    credentials: 'include',
-    headers: { 'X-XSRF-TOKEN': token },
-  })
-  user.value = null
-  router.push('/login')
-}
+const { user, fetchMe, logout } = useAuth()
 
 onMounted(() => {
   fetchMe()
