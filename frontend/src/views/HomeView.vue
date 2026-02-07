@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue'
+import * as api from '../api/client'
 
 const message = ref('')
 const loading = ref(true)
@@ -7,7 +8,7 @@ const error = ref(null)
 
 onMounted(async () => {
   try {
-    const res = await fetch('/api/hello', { credentials: 'include' })
+    const res = await api.get('/api/hello')
     if (!res.ok) throw new Error(res.statusText)
     const data = await res.json()
     message.value = data.message ?? 'Hello, world'

@@ -1,12 +1,12 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { getCsrfToken } from './useCsrf'
+import * as api from '../api/client'
 
 export const user = ref(null)
 
 export async function fetchMe() {
   try {
-    const res = await fetch('/api/me', { credentials: 'include' })
+    const res = await api.get('/api/me')
     if (res.ok) {
       const data = await res.json()
       user.value = data
@@ -22,12 +22,7 @@ export function useAuth() {
   const router = useRouter()
 
   async function logout() {
-    const token = await getCsrfToken()
-    await fetch('/logout', {
-      method: 'POST',
-      credentials: 'include',
-      headers: { 'X-XSRF-TOKEN': token },
-    })
+    await api.post('/logout', {})
     user.value = null
     router.push('/login')
   }

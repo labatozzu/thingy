@@ -3,6 +3,7 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { getCsrfToken } from '../composables/useCsrf'
 import { useAuth } from '../composables/useAuth'
+import * as api from '../api/client'
 
 const email = ref('')
 const password = ref('')
@@ -19,11 +20,9 @@ async function submit() {
     if (!csrfToken.value) csrfToken.value = await getCsrfToken()
     const token = csrfToken.value || (await getCsrfToken())
     const body = new URLSearchParams({ username: email.value, password: password.value, _csrf: token })
-    const res = await fetch('/login', {
-      method: 'POST',
-      credentials: 'include',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'X-XSRF-TOKEN': token },
+    const res = await api.post('/login', {
       body: body.toString(),
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     })
     if (res.ok) {
       await fetchMe()
