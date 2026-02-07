@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { getCsrfToken } from '../composables/useCsrf'
 
 const email = ref('')
 const password = ref('')
@@ -9,25 +10,12 @@ const loading = ref(false)
 const csrfToken = ref('')
 const router = useRouter()
 
-function getTokenFromCookie() {
-  const m = document.cookie.match(/\bXSRF-TOKEN=([^;]+)/)
-  return m ? decodeURIComponent(m[1]) : ''
-}
-
-async function fetchCsrf() {
-  const res = await fetch('/api/csrf', { credentials: 'include' })
-  if (res.ok) {
-    const data = await res.json()
-    csrfToken.value = data.token || getTokenFromCookie() || ''
-  }
-}
-
 async function submit() {
   error.value = ''
   loading.value = true
   try {
-    if (!csrfToken.value) await fetchCsrf()
-    const token = csrfToken.value || getTokenFromCookie()
+    if (!csrfToken.value) csrfToken.value = await getCsrfToken()
+    const token = csrfToken.value || (await getCsrfToken())
     const body = new URLSearchParams({ username: email.value, password: password.value, _csrf: token })
     const res = await fetch('/login', {
       method: 'POST',
@@ -48,7 +36,7 @@ async function submit() {
 }
 
 onMounted(async () => {
-  await fetchCsrf()
+  csrfToken.value = await getCsrfToken()
 })
 </script>
 

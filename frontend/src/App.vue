@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { getCsrfToken } from './composables/useCsrf'
 
 const route = useRoute()
 const router = useRouter()
@@ -13,20 +14,6 @@ async function fetchMe() {
   } else {
     user.value = null
   }
-}
-
-function getTokenFromCookie() {
-  const m = document.cookie.match(/\bXSRF-TOKEN=([^;]+)/)
-  return m ? decodeURIComponent(m[1]) : ''
-}
-
-async function getCsrfToken() {
-  const res = await fetch('/api/csrf', { credentials: 'include' })
-  if (res.ok) {
-    const data = await res.json()
-    return data.token || getTokenFromCookie() || ''
-  }
-  return getTokenFromCookie()
 }
 
 async function logout() {
