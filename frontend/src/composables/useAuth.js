@@ -2,19 +2,24 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { getCsrfToken } from './useCsrf'
 
-const user = ref(null)
+export const user = ref(null)
 
-export function useAuth() {
-  const router = useRouter()
-
-  async function fetchMe() {
+export async function fetchMe() {
+  try {
     const res = await fetch('/api/me', { credentials: 'include' })
     if (res.ok) {
-      user.value = await res.json()
+      const data = await res.json()
+      user.value = data
     } else {
       user.value = null
     }
+  } catch {
+    user.value = null
   }
+}
+
+export function useAuth() {
+  const router = useRouter()
 
   async function logout() {
     const token = await getCsrfToken()
