@@ -10,6 +10,9 @@ frontend/node_modules/
 .DS_Store
 Thumbs.db
 
+# Cursor MCP config (may contain secrets)
+.cursor/mcp.json
+
 # Logs
 *.log
 npm-debug.log*
