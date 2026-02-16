@@ -57,7 +57,7 @@ onMounted(async () => {
       <p v-if="error" class="error">{{ error }}</p>
       <button type="submit" :disabled="loading">{{ loading ? 'Signing in...' : 'Sign in' }}</button>
     </form>
-    <p><router-link to="/">Back to home</router-link></p>
+    <p><router-link to="/">Back to home</router-link> · <router-link to="/register">Sign up</router-link></p>
   </div>
 </template>
 

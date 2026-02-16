@@ -3,9 +3,12 @@ package com.myproject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.security.web.csrf.DeferredCsrfToken;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,9 +22,11 @@ import java.util.Map;
 public class AuthController {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public AuthController(UserRepository userRepository) {
+    public AuthController(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping("/csrf")
@@ -59,5 +64,22 @@ public class AuthController {
                 "id", user.getId(),
                 "email", user.getEmail()
         ));
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<Void> register(@RequestBody Map<String, String> body) {
+        String email = body != null ? body.get("email") : null;
+        String password = body != null ? body.get("password") : null;
+        if (email == null || email.isBlank() || password == null || password.isBlank()) {
+            return ResponseEntity.badRequest().build();
+        }
+        if (userRepository.findByEmail(email.trim()).isPresent()) {
+            return ResponseEntity.status(409).build();
+        }
+        User user = new User();
+        user.setEmail(email.trim());
+        user.setPasswordHash(passwordEncoder.encode(password));
+        userRepository.save(user);
+        return ResponseEntity.status(201).build();
     }
 }

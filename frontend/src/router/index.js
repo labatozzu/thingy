@@ -4,6 +4,9 @@ import { user, fetchMe } from '../composables/useAuth'
 const routes = [
   { path: '/', name: 'home', component: () => import('../views/HomeView.vue') },
   { path: '/login', name: 'login', component: () => import('../views/LoginView.vue') },
+  { path: '/register', name: 'register', component: () => import('../views/RegisterView.vue') },
+  { path: '/terms', name: 'terms', component: () => import('../views/TermsView.vue') },
+  { path: '/privacy', name: 'privacy', component: () => import('../views/PrivacyView.vue') },
 ]
 
 export const router = createRouter({
@@ -16,7 +19,7 @@ router.beforeEach(async (to, _from, next) => {
     if (user.value === null) {
       await fetchMe()
     }
-    if (to.path === '/login' && user.value) {
+    if ((to.path === '/login' || to.path === '/register') && user.value) {
       next('/')
     } else if (to.path === '/' && !user.value) {
       next('/login')
