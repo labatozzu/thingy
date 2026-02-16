@@ -1,0 +1,52 @@
+---
+description: Architecture, auth, API patterns, and security decisions
+alwaysApply: true
+---
+
+# Architecture and Patterns
+
+## Authentication
+
+- **Session-based only.** No JWT. Spring Security form login.
+- **CSRF protection:** Cookie-based (`XSRF-TOKEN`). All state-changing requests (POST) must include `X-XSRF-TOKEN` header. Frontend fetches token from `GET /api/csrf` before login.
+- **Login:** `POST /login` with `application/x-www-form-urlencoded` body: `username` (email), `password`, `_csrf`.
+- **Generic error messages:** Never distinguish "wrong email" vs "wrong password". Use "Invalid email or password" to prevent email enumeration.
+- **User lookup:** Backend uses email as username. `UserDetailsService` loads user by email from `UserRepository`.
+
+## API Contract
+
+### Public endpoints (no auth required)
+
+- `GET /api/hello` — Returns `{ "message": "..." }`
+- `GET /api/csrf` — Returns `{ "token": "<csrf-token>" }`
+- `POST /login` — Form login (see above)
+- `POST /logout` — Session invalidation
+
+### Protected endpoints (require authenticated session)
+
+- `GET /api/me` — Returns `{ "id", "email" }` or 401
+
+### Adding new endpoints
+
+- **Public:** Add path to `SecurityConfig` `requestMatchers(...).permitAll()`
+- **Protected:** Place under `/api/**` — authenticated by default
+- **Response format:** Use `ResponseEntity` with `Map.of()` or DTOs. JSON by default.
+
+## Frontend Patterns
+
+- **API client:** `src/api/client.js` — `get(path)` and `post(path, { body, headers })`. Always use this for API calls; it handles `credentials: 'include'` and CSRF for POST.
+- **Auth state:** `src/composables/useAuth.js` — shared `user` ref, `fetchMe()`, `logout()`. App.vue and router use it.
+- **CSRF:** `src/composables/useCsrf.js` — `getCsrfToken()` fetches from `/api/csrf` or reads cookie.
+- **Routing:** Home (`/`) and Login (`/login`). Router guard: unauthenticated users on `/` → redirect to `/login`; authenticated users on `/login` → redirect to `/`.
+
+## CORS
+
+- Allowed origins: `localhost:5173`, `127.0.0.1:5173`, `thingylingie.fly.dev`
+- Credentials: `true` (required for cookies/sessions)
+
+## Non-Goals (do not add without explicit spec)
+
+- Forgot password, remember me
+- Rate limiting, account lockout
+- JWT or token-based auth
+- Email enumeration (different messages for wrong email vs wrong password)

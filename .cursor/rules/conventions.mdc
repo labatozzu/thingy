@@ -1,0 +1,28 @@
+---
+description: Coding conventions and patterns for backend and frontend
+alwaysApply: true
+---
+
+# Conventions
+
+## Backend (Java / Spring Boot)
+
+- **Package:** `com.myproject`
+- **Controllers:** `@RestController` with `@RequestMapping("/api")`. Use constructor injection for repositories.
+- **Response style:** `ResponseEntity.ok(Map.of(...))` or `ResponseEntity.status(401).build()` for errors.
+- **Repositories:** Spring Data JPA. Extend `JpaRepository`. Use `findByEmail`, `findById` etc.
+- **Security:** All auth config in `SecurityConfig`. Use `@AuthenticationPrincipal UserDetails` for current user in controllers.
+
+## Frontend (Vue 3)
+
+- **Composition API:** Use `<script setup>` and composables. No Options API.
+- **State:** `ref()` for local state. Shared auth state in `useAuth.js` (single `user` ref).
+- **API calls:** Always via `src/api/client.js`. Use `api.get(path)` and `api.post(path, { body, headers })`.
+- **Forms:** Use `@submit.prevent`, `v-model`, `ref()` for fields. Show loading state and generic error messages.
+- **Styling:** Scoped CSS in components. Shared styles in `App.vue`. Color palette: `#1a1a2e`, `#16213e`, `#b8b8d0` for header/nav.
+
+## General
+
+- **Error handling:** Catch errors, show user-friendly message. Don't expose stack traces or internal details.
+- **Credentials:** All API requests use `credentials: 'include'` for cookie-based sessions.
+- **OpenSpec:** Use OpenSpec for new features when appropriate. See `openspec/specs/` and `AGENTS.md`.
