@@ -17,8 +17,8 @@ async function submit() {
   error.value = ''
   loading.value = true
   try {
-    if (!csrfToken.value) csrfToken.value = await getCsrfToken()
     const token = csrfToken.value || (await getCsrfToken())
+    csrfToken.value = token
     const body = new URLSearchParams({ username: email.value, password: password.value, _csrf: token })
     const res = await api.post('/login', {
       body: body.toString(),
