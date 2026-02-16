@@ -21,6 +21,18 @@ public class User {
     @Column(name = "password_hash", nullable = false)
     private String passwordHash;
 
+    @Column(name = "jeans_waist_min")
+    private Integer jeansWaistMin;
+
+    @Column(name = "jeans_waist_max")
+    private Integer jeansWaistMax;
+
+    @Column(name = "jeans_length_in")
+    private Integer jeansLengthIn;
+
+    @Column(name = "height_cm")
+    private Integer heightCm;
+
     public User() {
     }
 
@@ -52,5 +64,37 @@ public class User {
 
     public void setPasswordHash(String passwordHash) {
         this.passwordHash = passwordHash;
+    }
+
+    public Integer getJeansWaistMin() {
+        return jeansWaistMin;
+    }
+
+    public void setJeansWaistMin(Integer jeansWaistMin) {
+        this.jeansWaistMin = jeansWaistMin;
+    }
+
+    public Integer getJeansWaistMax() {
+        return jeansWaistMax;
+    }
+
+    public void setJeansWaistMax(Integer jeansWaistMax) {
+        this.jeansWaistMax = jeansWaistMax;
+    }
+
+    public Integer getJeansLengthIn() {
+        return jeansLengthIn;
+    }
+
+    public void setJeansLengthIn(Integer jeansLengthIn) {
+        this.jeansLengthIn = jeansLengthIn;
+    }
+
+    public Integer getHeightCm() {
+        return heightCm;
+    }
+
+    public void setHeightCm(Integer heightCm) {
+        this.heightCm = heightCm;
     }
 }

@@ -27,9 +27,11 @@ public class SecurityConfig {
                     repo.setCookiePath("/");
                     repo.setCookieCustomizer(builder -> builder.sameSite("Lax"));
                     csrf.csrfTokenRepository(repo);
+                    csrf.ignoringRequestMatchers("/h2-console/**");
                 })
+                .headers(headers -> headers.frameOptions(frame -> frame.sameOrigin()))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/message", "/api/csrf", "/api/register", "/login", "/logout").permitAll()
+                        .requestMatchers("/api/message", "/api/csrf", "/api/register", "/login", "/logout", "/h2-console/**").permitAll()
                         .requestMatchers("/api/**").authenticated()
                         .anyRequest().permitAll()
                 )

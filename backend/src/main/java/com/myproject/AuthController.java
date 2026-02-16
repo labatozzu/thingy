@@ -60,26 +60,55 @@ public class AuthController {
         if (user == null) {
             return ResponseEntity.status(401).build();
         }
-        return ResponseEntity.ok(Map.of(
-                "id", user.getId(),
-                "email", user.getEmail()
-        ));
+        var map = new java.util.HashMap<String, Object>();
+        map.put("id", user.getId());
+        map.put("email", user.getEmail());
+        if (user.getJeansWaistMin() != null) map.put("jeansWaistMin", user.getJeansWaistMin());
+        if (user.getJeansWaistMax() != null) map.put("jeansWaistMax", user.getJeansWaistMax());
+        if (user.getJeansLengthIn() != null) map.put("jeansLengthIn", user.getJeansLengthIn());
+        if (user.getHeightCm() != null) map.put("heightCm", user.getHeightCm());
+        return ResponseEntity.ok(map);
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Void> register(@RequestBody Map<String, String> body) {
-        String email = body != null ? body.get("email") : null;
-        String password = body != null ? body.get("password") : null;
+    public ResponseEntity<Void> register(@RequestBody Map<String, Object> body) {
+        if (body == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        String email = body.get("email") != null ? body.get("email").toString().trim() : null;
+        String password = body.get("password") != null ? body.get("password").toString() : null;
         if (email == null || email.isBlank() || password == null || password.isBlank()) {
             return ResponseEntity.badRequest().build();
         }
-        if (userRepository.findByEmail(email.trim()).isPresent()) {
+        Integer waistMin = parseInteger(body.get("jeansWaistMin"));
+        Integer waistMax = parseInteger(body.get("jeansWaistMax"));
+        Integer lengthIn = parseInteger(body.get("jeansLengthIn"));
+        Integer heightCm = parseInteger(body.get("heightCm"));
+        if (waistMin == null || waistMax == null || lengthIn == null || heightCm == null
+                || waistMax != waistMin + 1 || heightCm < 140 || heightCm > 220) {
+            return ResponseEntity.badRequest().build();
+        }
+        if (userRepository.findByEmail(email).isPresent()) {
             return ResponseEntity.status(409).build();
         }
         User user = new User();
-        user.setEmail(email.trim());
+        user.setEmail(email);
         user.setPasswordHash(passwordEncoder.encode(password));
+        user.setJeansWaistMin(waistMin);
+        user.setJeansWaistMax(waistMax);
+        user.setJeansLengthIn(lengthIn);
+        user.setHeightCm(heightCm);
         userRepository.save(user);
         return ResponseEntity.status(201).build();
+    }
+
+    private static Integer parseInteger(Object o) {
+        if (o == null) return null;
+        if (o instanceof Number) return ((Number) o).intValue();
+        try {
+            return Integer.parseInt(o.toString());
+        } catch (NumberFormatException e) {
+            return null;
+        }
     }
 }

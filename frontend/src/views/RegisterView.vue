@@ -7,7 +7,16 @@ import * as api from '../api/client'
 const email = ref('')
 const password = ref('')
 const confirmPassword = ref('')
+const jeansWaistMin = ref(30)
+const jeansLengthIn = ref(32)
+const heightCm = ref(170)
 const termsAccepted = ref(false)
+
+const waistRanges = []
+for (let w = 26; w <= 40; w++) {
+  waistRanges.push({ min: w, max: w + 1 })
+}
+const lengthOptions = [28, 30, 32, 34, 36]
 const showPassword = ref(false)
 const error = ref('')
 const loading = ref(false)
@@ -27,7 +36,14 @@ async function submit() {
     const token = csrfToken.value || (await getCsrfToken())
     csrfToken.value = token
     const res = await api.post('/api/register', {
-      body: JSON.stringify({ email: email.value, password: password.value }),
+      body: JSON.stringify({
+        email: email.value,
+        password: password.value,
+        jeansWaistMin: jeansWaistMin.value,
+        jeansWaistMax: jeansWaistMin.value + 1,
+        jeansLengthIn: jeansLengthIn.value,
+        heightCm: heightCm.value,
+      }),
       headers: { 'Content-Type': 'application/json' },
     })
     if (res.ok) {
@@ -111,6 +127,22 @@ onMounted(async () => {
           </button>
         </div>
       </div>
+      <div class="field">
+        <label for="reg-waist">Jeans waist (inches)</label>
+        <select id="reg-waist" v-model.number="jeansWaistMin" required>
+          <option v-for="r in waistRanges" :key="r.min" :value="r.min">{{ r.min }}–{{ r.max }}</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="reg-length">Jeans length (inches)</label>
+        <select id="reg-length" v-model.number="jeansLengthIn" required>
+          <option v-for="l in lengthOptions" :key="l" :value="l">{{ l }}</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="reg-height">Height (cm)</label>
+        <input id="reg-height" v-model.number="heightCm" type="number" min="140" max="220" required />
+      </div>
       <div class="field terms">
         <label class="checkbox-label">
           <input v-model="termsAccepted" type="checkbox" required />
@@ -148,7 +180,9 @@ onMounted(async () => {
 }
 .field input[type="email"],
 .field input[type="password"],
-.field input[type="text"] {
+.field input[type="text"],
+.field input[type="number"],
+.field select {
   width: 100%;
   padding: 0.5rem 0.75rem;
   border: 1px solid #ccc;
