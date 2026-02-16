@@ -19,7 +19,7 @@ Users authenticate with email and password. The app uses session-based auth with
 - `GET /api/csrf` — Returns `{ "token": "<csrf-token>" }`. Required before POST to `/login`. Cookie `XSRF-TOKEN` may also carry the token.
 - `POST /login` — Form login (application/x-www-form-urlencoded). Params: `username` (email), `password`, `_csrf`. Response: 200 success, 401 invalid credentials.
 - `GET /api/me` — Returns current user `{ "id", "email" }` or 401 if not authenticated.
-- Public routes: `/api/hello`, `/api/csrf`, `/login`, `/logout`. All other `/api/**` require authentication.
+- Public routes: `/api/message`, `/api/csrf`, `/login`, `/logout`. All other `/api/**` require authentication.
 
 ## UI
 

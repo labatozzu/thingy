@@ -29,7 +29,7 @@ public class SecurityConfig {
                     csrf.csrfTokenRepository(repo);
                 })
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/hello", "/api/csrf", "/login", "/logout").permitAll()
+                        .requestMatchers("/api/message", "/api/csrf", "/login", "/logout").permitAll()
                         .requestMatchers("/api/**").authenticated()
                         .anyRequest().permitAll()
                 )

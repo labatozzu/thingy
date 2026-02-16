@@ -17,7 +17,7 @@ alwaysApply: true
 
 ### Public endpoints (no auth required)
 
-- `GET /api/hello` — Returns `{ "message": "..." }`
+- `GET /api/message` — Returns `{ "message": "..." }`
 - `GET /api/csrf` — Returns `{ "token": "<csrf-token>" }`
 - `POST /login` — Form login (see above)
 - `POST /logout` — Session invalidation

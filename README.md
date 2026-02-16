@@ -1,6 +1,6 @@
 # Minimal Spring Boot + Vue.js
 
-Minimal full-stack app: Spring Boot backend, Vue 3 + Vite frontend. The Vue app displays the message from `GET /api/hello`.
+Minimal full-stack app: Spring Boot backend, Vue 3 + Vite frontend. The Vue app displays the message from `GET /api/message`.
 
 ## Requirements
 
@@ -17,7 +17,7 @@ cd backend
 mvn spring-boot:run
 ```
 
-Backend runs at http://localhost:8080. Test: http://localhost:8080/api/hello
+Backend runs at http://localhost:8080. Test: http://localhost:8080/api/message
 
 **2. Start the frontend**
 

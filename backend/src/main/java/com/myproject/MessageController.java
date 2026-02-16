@@ -8,16 +8,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api")
-public class HelloController {
+public class MessageController {
 
     private final MessageRepository messageRepository;
 
-    public HelloController(MessageRepository messageRepository) {
+    public MessageController(MessageRepository messageRepository) {
         this.messageRepository = messageRepository;
     }
 
-    @GetMapping("/hello")
-    public Map<String, String> hello() {
+    @GetMapping("/message")
+    public Map<String, String> message() {
         String text = messageRepository.findById(1L)
                 .map(Message::getText)
                 .orElse("Text not found");

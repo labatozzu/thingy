@@ -8,10 +8,10 @@ const error = ref(null)
 
 onMounted(async () => {
   try {
-    const res = await api.get('/api/hello')
+    const res = await api.get('/api/message')
     if (!res.ok) throw new Error(res.statusText)
     const data = await res.json()
-    message.value = data.message ?? 'Hello, world'
+    message.value = data.message ?? 'Welcome'
   } catch (e) {
     error.value = e.message
     message.value = ''
