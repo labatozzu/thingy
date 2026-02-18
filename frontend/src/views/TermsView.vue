@@ -1,11 +1,13 @@
 <script setup>
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 </script>
 
 <template>
   <div class="terms">
-    <h1>Terms of Service</h1>
-    <p>This page is a placeholder. Terms of Service will be added here.</p>
-    <p><router-link to="/register">Back to sign up</router-link></p>
+    <h1>{{ t('terms.title') }}</h1>
+    <p>{{ t('terms.placeholder') }}</p>
+    <p><router-link to="/register">{{ t('terms.backToSignUp') }}</router-link></p>
   </div>
 </template>
 

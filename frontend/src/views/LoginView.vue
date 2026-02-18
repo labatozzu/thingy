@@ -1,10 +1,12 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { getCsrfToken } from '../composables/useCsrf'
 import { useAuth } from '../composables/useAuth'
 import * as api from '../api/client'
 
+const { t } = useI18n()
 const email = ref('')
 const password = ref('')
 const error = ref('')
@@ -28,10 +30,10 @@ async function submit() {
       await fetchMe()
       router.push('/')
     } else {
-      error.value = 'Invalid email or password'
+      error.value = t('login.error')
     }
   } catch (e) {
-    error.value = e.message || 'Login failed'
+    error.value = t('login.errorGeneric')
   } finally {
     loading.value = false
   }
@@ -44,20 +46,20 @@ onMounted(async () => {
 
 <template>
   <div class="login">
-    <h1>Login</h1>
+    <h1>{{ t('login.title') }}</h1>
     <form @submit.prevent="submit">
       <div class="field">
-        <label for="email">Email</label>
+        <label for="email">{{ t('login.email') }}</label>
         <input id="email" v-model="email" type="email" required autocomplete="email" />
       </div>
       <div class="field">
-        <label for="password">Password</label>
+        <label for="password">{{ t('login.password') }}</label>
         <input id="password" v-model="password" type="password" required autocomplete="current-password" />
       </div>
       <p v-if="error" class="error">{{ error }}</p>
-      <button type="submit" :disabled="loading">{{ loading ? 'Signing in...' : 'Sign in' }}</button>
+      <button type="submit" :disabled="loading">{{ loading ? t('login.submitting') : t('login.submit') }}</button>
     </form>
-    <p><router-link to="/">Back to home</router-link> · <router-link to="/register">Sign up</router-link></p>
+    <p><router-link to="/">{{ t('login.backToHome') }}</router-link> · <router-link to="/register">{{ t('login.signUp') }}</router-link></p>
   </div>
 </template>
 

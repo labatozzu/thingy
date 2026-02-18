@@ -1,8 +1,10 @@
 <script setup>
 import { ref, computed, onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import * as api from '../api/client'
 
+const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
 const item = ref(null)
@@ -13,22 +15,22 @@ const saveError = ref(null)
 
 const itemId = computed(() => route.params.id)
 
-const FIT_OPTIONS = [
-  { value: 'TRUE_TO_SIZE', label: 'True to size' },
-  { value: 'RUNS_SMALL', label: 'Runs small' },
-  { value: 'RUNS_BIG', label: 'Runs big' },
-]
+const FIT_OPTIONS = computed(() => [
+  { value: 'TRUE_TO_SIZE', label: t('items.fitTrueToSize') },
+  { value: 'RUNS_SMALL', label: t('items.fitRunsSmall') },
+  { value: 'RUNS_BIG', label: t('items.fitRunsBig') },
+])
 
-const VISIBILITY_OPTIONS = [
-  { value: 'PRIVATE', label: 'Private' },
-  { value: 'FRIENDS_ONLY', label: 'Friends only' },
-  { value: 'PUBLIC', label: 'Public' },
-]
+const VISIBILITY_OPTIONS = computed(() => [
+  { value: 'PRIVATE', label: t('items.visibilityPrivate') },
+  { value: 'FRIENDS_ONLY', label: t('items.visibilityFriendsOnly') },
+  { value: 'PUBLIC', label: t('items.visibilityPublic') },
+])
 
-const STATUS_OPTIONS = [
-  { value: 'NOT_AVAILABLE', label: 'Not available' },
-  { value: 'AVAILABLE', label: 'Available' },
-]
+const STATUS_OPTIONS = computed(() => [
+  { value: 'NOT_AVAILABLE', label: t('items.statusNotAvailable') },
+  { value: 'AVAILABLE', label: t('items.statusAvailable') },
+])
 
 async function fetchItem() {
   if (!itemId.value) return
@@ -37,14 +39,14 @@ async function fetchItem() {
   try {
     const res = await api.get(`/api/items/${itemId.value}`)
     if (res.status === 404) {
-      error.value = 'Item not found'
+      error.value = t('items.itemNotFound')
       item.value = null
       return
     }
     if (!res.ok) throw new Error(res.statusText)
     item.value = await res.json()
   } catch (e) {
-    error.value = e.message || 'Failed to load item'
+    error.value = t('items.errorLoadItem')
     item.value = null
   } finally {
     loading.value = false
@@ -68,7 +70,7 @@ async function save() {
     if (!res.ok) throw new Error(res.statusText)
     item.value = await res.json()
   } catch (e) {
-    saveError.value = e.message || 'Failed to save'
+    saveError.value = t('items.errorSave')
   } finally {
     saving.value = false
   }
@@ -84,8 +86,8 @@ watch(itemId, fetchItem)
 
 <template>
   <div class="item-detail">
-    <a href="#" class="back-link" @click.prevent="goBack">← Back to My items</a>
-    <p v-if="loading">Loading...</p>
+    <a href="#" class="back-link" @click.prevent="goBack">{{ t('items.backToMyItems') }}</a>
+    <p v-if="loading">{{ t('items.loading') }}</p>
     <p v-else-if="error" class="error">{{ error }}</p>
     <div v-else-if="item" class="detail-card">
       <div class="detail-photo">
@@ -102,7 +104,7 @@ watch(itemId, fetchItem)
         <h1 class="detail-title">{{ item.title }}</h1>
         <form class="detail-specs" @submit.prevent="save">
           <label class="spec-row">
-            <span class="spec-label">Waist</span>
+            <span class="spec-label">{{ t('items.waist') }}</span>
             <input
               v-model.number="item.waist"
               type="number"
@@ -113,7 +115,7 @@ watch(itemId, fetchItem)
             <span class="spec-unit">"</span>
           </label>
           <label class="spec-row">
-            <span class="spec-label">Length</span>
+            <span class="spec-label">{{ t('items.length') }}</span>
             <input
               v-model.number="item.lengthIn"
               type="number"
@@ -124,7 +126,7 @@ watch(itemId, fetchItem)
             <span class="spec-unit">"</span>
           </label>
           <label class="spec-row">
-            <span class="spec-label">Fit</span>
+            <span class="spec-label">{{ t('items.fit') }}</span>
             <select v-model="item.fitEstimate" class="spec-select">
               <option v-for="o in FIT_OPTIONS" :key="o.value" :value="o.value">
                 {{ o.label }}
@@ -132,7 +134,7 @@ watch(itemId, fetchItem)
             </select>
           </label>
           <label class="spec-row">
-            <span class="spec-label">Visibility</span>
+            <span class="spec-label">{{ t('items.visibility') }}</span>
             <select v-model="item.visibility" class="spec-select">
               <option v-for="o in VISIBILITY_OPTIONS" :key="o.value" :value="o.value">
                 {{ o.label }}
@@ -140,7 +142,7 @@ watch(itemId, fetchItem)
             </select>
           </label>
           <label class="spec-row">
-            <span class="spec-label">Status</span>
+            <span class="spec-label">{{ t('items.status') }}</span>
             <select v-model="item.status" class="spec-select">
               <option v-for="o in STATUS_OPTIONS" :key="o.value" :value="o.value">
                 {{ o.label }}
@@ -149,7 +151,7 @@ watch(itemId, fetchItem)
           </label>
           <p v-if="saveError" class="save-error">{{ saveError }}</p>
           <button type="submit" class="save-btn" :disabled="saving">
-            {{ saving ? 'Saving...' : 'Save changes' }}
+            {{ saving ? t('items.saving') : t('items.save') }}
           </button>
         </form>
       </div>

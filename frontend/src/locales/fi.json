@@ -1,0 +1,83 @@
+{
+  "app": {
+    "name": "Oma sovellus",
+    "home": "Etusivu",
+    "myItems": "Omat tuotteet",
+    "login": "Kirjaudu",
+    "logout": "Kirjaudu ulos",
+    "loggedInAs": "Kirjautuneena: {email}",
+    "menu": "Valikko"
+  },
+  "login": {
+    "title": "Kirjaudu sisään",
+    "email": "Sähköposti",
+    "password": "Salasana",
+    "submit": "Kirjaudu",
+    "submitting": "Kirjaudutaan...",
+    "error": "Virheellinen sähköposti tai salasana",
+    "errorGeneric": "Kirjautuminen epäonnistui",
+    "backToHome": "Takaisin etusivulle",
+    "signUp": "Rekisteröidy"
+  },
+  "register": {
+    "title": "Rekisteröidy",
+    "email": "Sähköposti",
+    "password": "Salasana",
+    "confirmPassword": "Vahvista salasana",
+    "showPassword": "Näytä salasana",
+    "hidePassword": "Piilota salasana",
+    "jeansWaist": "Farkkujen vyötärö (tuumaa)",
+    "jeansLength": "Farkkujen pituus (tuumaa)",
+    "height": "Pituus (cm)",
+    "termsLabel": "Hyväksyn",
+    "termsAnd": "ja",
+    "terms": "Käyttöehdot",
+    "privacy": "Tietosuojakäytäntö",
+    "submit": "Rekisteröidy",
+    "submitting": "Luodaan tiliä...",
+    "errorPasswords": "Salasanat eivät täsmää",
+    "errorEmailInUse": "Sähköposti on jo käytössä",
+    "errorGeneric": "Rekisteröityminen epäonnistui",
+    "signIn": "Onko sinulla jo tili? Kirjaudu sisään"
+  },
+  "items": {
+    "title": "Omat tuotteet",
+    "loading": "Ladataan...",
+    "empty": "Ei vielä tuotteita.",
+    "errorLoad": "Tuotteiden lataus epäonnistui",
+    "backToMyItems": "← Takaisin omiin tuotteisiin",
+    "waist": "Vyötärö",
+    "length": "Pituus",
+    "fit": "Istuvuus",
+    "visibility": "Näkyvyys",
+    "status": "Tila",
+    "save": "Tallenna muutokset",
+    "saving": "Tallennetaan...",
+    "errorLoadItem": "Tuotteen lataus epäonnistui",
+    "errorSave": "Tallennus epäonnistui",
+    "itemNotFound": "Tuotetta ei löytynyt",
+    "fitTrueToSize": "Normaali koko",
+    "fitRunsSmall": "Istuu pienemmin",
+    "fitRunsBig": "Istuu isommin",
+    "visibilityPrivate": "Yksityinen",
+    "visibilityFriendsOnly": "Vain ystävät",
+    "visibilityPublic": "Julkinen",
+    "statusNotAvailable": "Ei saatavilla",
+    "statusAvailable": "Saatavilla"
+  },
+  "home": {
+    "loading": "Ladataan...",
+    "error": "Virhe: {message}",
+    "welcome": "Tervetuloa"
+  },
+  "terms": {
+    "title": "Käyttöehdot",
+    "placeholder": "Tämä sivu on väliaikainen. Käyttöehdot lisätään tähän.",
+    "backToSignUp": "Takaisin rekisteröitymiseen"
+  },
+  "privacy": {
+    "title": "Tietosuojakäytäntö",
+    "placeholder": "Tämä sivu on väliaikainen. Tietosuojakäytäntö lisätään tähän.",
+    "backToSignUp": "Takaisin rekisteröitymiseen"
+  }
+}

@@ -1,9 +1,11 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { getCsrfToken } from '../composables/useCsrf'
 import * as api from '../api/client'
 
+const { t } = useI18n()
 const email = ref('')
 const password = ref('')
 const confirmPassword = ref('')
@@ -28,7 +30,7 @@ const canSubmit = computed(() => termsAccepted.value && !loading.value)
 async function submit() {
   error.value = ''
   if (password.value !== confirmPassword.value) {
-    error.value = 'Passwords don\'t match'
+    error.value = t('register.errorPasswords')
     return
   }
   loading.value = true
@@ -49,12 +51,12 @@ async function submit() {
     if (res.ok) {
       router.push('/login')
     } else if (res.status === 409) {
-      error.value = 'Email already in use'
+      error.value = t('register.errorEmailInUse')
     } else {
-      error.value = 'Registration failed'
+      error.value = t('register.errorGeneric')
     }
   } catch (e) {
-    error.value = e.message || 'Registration failed'
+    error.value = t('register.errorGeneric')
   } finally {
     loading.value = false
   }
@@ -67,14 +69,14 @@ onMounted(async () => {
 
 <template>
   <div class="register">
-    <h1>Sign up</h1>
+    <h1>{{ t('register.title') }}</h1>
     <form @submit.prevent="submit">
       <div class="field">
-        <label for="reg-email">Email</label>
+        <label for="reg-email">{{ t('register.email') }}</label>
         <input id="reg-email" v-model="email" type="email" required autocomplete="email" />
       </div>
       <div class="field">
-        <label for="reg-password">Password</label>
+        <label for="reg-password">{{ t('register.password') }}</label>
         <div class="input-with-toggle">
           <input
             id="reg-password"
@@ -86,7 +88,7 @@ onMounted(async () => {
           <button
             type="button"
             class="toggle-password"
-            :aria-label="showPassword ? 'Hide password' : 'Show password'"
+            :aria-label="showPassword ? t('register.hidePassword') : t('register.showPassword')"
             @click="showPassword = !showPassword"
           >
             <svg v-if="showPassword" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -101,7 +103,7 @@ onMounted(async () => {
         </div>
       </div>
       <div class="field">
-        <label for="reg-confirm">Confirm password</label>
+        <label for="reg-confirm">{{ t('register.confirmPassword') }}</label>
         <div class="input-with-toggle">
           <input
             id="reg-confirm"
@@ -113,7 +115,7 @@ onMounted(async () => {
           <button
             type="button"
             class="toggle-password"
-            :aria-label="showPassword ? 'Hide password' : 'Show password'"
+            :aria-label="showPassword ? t('register.hidePassword') : t('register.showPassword')"
             @click="showPassword = !showPassword"
           >
             <svg v-if="showPassword" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -128,31 +130,31 @@ onMounted(async () => {
         </div>
       </div>
       <div class="field">
-        <label for="reg-waist">Jeans waist (inches)</label>
+        <label for="reg-waist">{{ t('register.jeansWaist') }}</label>
         <select id="reg-waist" v-model.number="jeansWaistMin" required>
           <option v-for="r in waistRanges" :key="r.min" :value="r.min">{{ r.min }}–{{ r.max }}</option>
         </select>
       </div>
       <div class="field">
-        <label for="reg-length">Jeans length (inches)</label>
+        <label for="reg-length">{{ t('register.jeansLength') }}</label>
         <select id="reg-length" v-model.number="jeansLengthIn" required>
           <option v-for="l in lengthOptions" :key="l" :value="l">{{ l }}</option>
         </select>
       </div>
       <div class="field">
-        <label for="reg-height">Height (cm)</label>
+        <label for="reg-height">{{ t('register.height') }}</label>
         <input id="reg-height" v-model.number="heightCm" type="number" min="140" max="220" required />
       </div>
       <div class="field terms">
         <label class="checkbox-label">
           <input v-model="termsAccepted" type="checkbox" required />
-          <span>I agree to the <router-link to="/terms">Terms of Service</router-link> and <router-link to="/privacy">Privacy Policy</router-link></span>
+          <span>{{ t('register.termsLabel') }} <router-link to="/terms">{{ t('register.terms') }}</router-link> {{ t('register.termsAnd') }} <router-link to="/privacy">{{ t('register.privacy') }}</router-link></span>
         </label>
       </div>
       <p v-if="error" class="error">{{ error }}</p>
-      <button type="submit" :disabled="!canSubmit">{{ loading ? 'Creating account...' : 'Sign up' }}</button>
+      <button type="submit" :disabled="!canSubmit">{{ loading ? t('register.submitting') : t('register.submit') }}</button>
     </form>
-    <p><router-link to="/login">Already have an account? Sign in</router-link></p>
+    <p><router-link to="/login">{{ t('register.signIn') }}</router-link></p>
   </div>
 </template>
 

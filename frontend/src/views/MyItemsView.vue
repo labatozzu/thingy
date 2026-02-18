@@ -1,7 +1,9 @@
 <script setup>
 import { ref, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import * as api from '../api/client'
 
+const { t } = useI18n()
 const items = ref([])
 const loading = ref(true)
 const error = ref(null)
@@ -13,7 +15,7 @@ onMounted(async () => {
     const data = await res.json()
     items.value = data
   } catch (e) {
-    error.value = e.message || 'Failed to load items'
+    error.value = t('items.errorLoad')
     items.value = []
   } finally {
     loading.value = false
@@ -23,10 +25,10 @@ onMounted(async () => {
 
 <template>
   <div class="my-items">
-    <h1>My items</h1>
-    <p v-if="loading">Loading...</p>
+    <h1>{{ t('items.title') }}</h1>
+    <p v-if="loading">{{ t('items.loading') }}</p>
     <p v-else-if="error" class="error">{{ error }}</p>
-    <p v-else-if="items.length === 0" class="empty">No items yet.</p>
+    <p v-else-if="items.length === 0" class="empty">{{ t('items.empty') }}</p>
     <div v-else class="card-grid">
       <router-link
         v-for="item in items"

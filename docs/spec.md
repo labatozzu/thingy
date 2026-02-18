@@ -49,6 +49,8 @@ The app extends the life of garments, reduces waste, and supports sustainable co
 - **In scope:** User registration (with jeans size: waist range + length), login, logout, session-based auth, protected home page, CSRF protection. *(Core product features—browse jeans, list jeans, match—to be added.)*
 - **Out of scope:** Social login, email verification, password reset, rate limiting, account lockout. Other garment types beyond jeans (post-MVP).
 
+**Languages:** For now, the app supports **Finnish** and **English**. Users can switch language via the header. Additional languages may be added in future releases.
+
 ---
 
 ## Features
@@ -68,6 +70,7 @@ The app extends the life of garments, reduces waste, and supports sustainable co
 |---------|-------------|
 | **Home** | Protected page. *(Will evolve into browse/dashboard for circular economy flows.)* |
 | **Terms / Privacy** | Placeholder pages linked from registration. |
+| **Languages** | Finnish and English supported. Language switcher in header; preference persisted in browser. |
 
 ### Application (planned, MVP = jeans only)
 

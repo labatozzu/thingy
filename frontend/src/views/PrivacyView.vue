@@ -1,11 +1,13 @@
 <script setup>
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 </script>
 
 <template>
   <div class="privacy">
-    <h1>Privacy Policy</h1>
-    <p>This page is a placeholder. Privacy Policy will be added here.</p>
-    <p><router-link to="/register">Back to sign up</router-link></p>
+    <h1>{{ t('privacy.title') }}</h1>
+    <p>{{ t('privacy.placeholder') }}</p>
+    <p><router-link to="/register">{{ t('privacy.backToSignUp') }}</router-link></p>
   </div>
 </template>
 

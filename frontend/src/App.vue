@@ -1,9 +1,13 @@
 <script setup>
 import { ref, onMounted, watch, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { useAuth } from './composables/useAuth'
+import { useLocale } from './composables/useLocale'
 
 const route = useRoute()
+const { t } = useI18n()
+const { locale, setLocale } = useLocale()
 const { user, fetchMe, logout } = useAuth()
 const menuOpen = ref(false)
 
@@ -33,14 +37,32 @@ watch(() => route.path, () => {
 <template>
   <div class="app">
     <header class="header">
-      <router-link to="/" class="logo">My App</router-link>
+      <router-link to="/" class="logo">{{ t('app.name') }}</router-link>
       <nav class="nav">
+        <div class="lang-switcher">
+          <button
+            type="button"
+            class="lang-btn"
+            :class="{ active: locale === 'en' }"
+            @click="setLocale('en')"
+          >
+            EN
+          </button>
+          <button
+            type="button"
+            class="lang-btn"
+            :class="{ active: locale === 'fi' }"
+            @click="setLocale('fi')"
+          >
+            FI
+          </button>
+        </div>
         <div class="hamburger-wrapper" @click.stop>
           <button
             type="button"
             class="hamburger"
             :aria-expanded="menuOpen"
-            aria-label="Menu"
+            :aria-label="t('app.menu')"
             @click="toggleMenu"
           >
             <span></span>
@@ -48,15 +70,15 @@ watch(() => route.path, () => {
             <span></span>
           </button>
           <div v-if="menuOpen" class="menu-dropdown">
-            <router-link to="/" @click="closeMenu">Home</router-link>
-            <router-link v-if="user" to="/my-items" @click="closeMenu">My items</router-link>
+            <router-link to="/" @click="closeMenu">{{ t('app.home') }}</router-link>
+            <router-link v-if="user" to="/my-items" @click="closeMenu">{{ t('app.myItems') }}</router-link>
           </div>
         </div>
         <template v-if="user">
-          <span class="user">Logged in as {{ user.email }}</span>
-          <button type="button" class="btn" @click="logout">Logout</button>
+          <span class="user">{{ t('app.loggedInAs', { email: user.email }) }}</span>
+          <button type="button" class="btn" @click="logout">{{ t('app.logout') }}</button>
         </template>
-        <router-link v-else to="/login" class="nav-link-btn">Login</router-link>
+        <router-link v-else to="/login" class="nav-link-btn">{{ t('app.login') }}</router-link>
       </nav>
     </header>
     <main class="main">
@@ -106,6 +128,24 @@ body {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+}
+.lang-switcher {
+  display: flex;
+  gap: 0;
+}
+.lang-btn {
+  min-height: 44px;
+  min-width: 36px;
+  padding: 0 0.5rem;
+  background: transparent;
+  border: none;
+  color: #b8b8d0;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+.lang-btn:hover,
+.lang-btn.active {
+  color: #fff;
 }
 .nav a {
   color: #b8b8d0;

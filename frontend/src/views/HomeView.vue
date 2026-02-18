@@ -1,7 +1,9 @@
 <script setup>
 import { ref, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import * as api from '../api/client'
 
+const { t } = useI18n()
 const message = ref('')
 const loading = ref(true)
 const error = ref(null)
@@ -11,7 +13,7 @@ onMounted(async () => {
     const res = await api.get('/api/message')
     if (!res.ok) throw new Error(res.statusText)
     const data = await res.json()
-    message.value = data.message ?? 'Welcome'
+    message.value = data.message ?? t('home.welcome')
   } catch (e) {
     error.value = e.message
     message.value = ''
@@ -23,8 +25,8 @@ onMounted(async () => {
 
 <template>
   <div class="home">
-    <p v-if="loading">Loading...</p>
-    <p v-else-if="error" class="error">Error: {{ error }}</p>
+    <p v-if="loading">{{ t('home.loading') }}</p>
+    <p v-else-if="error" class="error">{{ t('home.error', { message: error }) }}</p>
     <p v-else class="message">{{ message }}</p>
   </div>
 </template>

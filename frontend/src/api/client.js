@@ -2,8 +2,16 @@ import { getCsrfToken } from '../composables/useCsrf'
 
 const credentials = 'include'
 
+function defaultHeaders() {
+  const locale = typeof localStorage !== 'undefined' ? localStorage.getItem('locale') || 'en' : 'en'
+  return { 'Accept-Language': locale }
+}
+
 export async function get(path) {
-  return fetch(path, { credentials })
+  return fetch(path, {
+    credentials,
+    headers: defaultHeaders(),
+  })
 }
 
 export async function post(path, { body = null, headers = {} } = {}) {
@@ -12,6 +20,7 @@ export async function post(path, { body = null, headers = {} } = {}) {
     method: 'POST',
     credentials,
     headers: {
+      ...defaultHeaders(),
       ...headers,
       'X-XSRF-TOKEN': token,
     },
@@ -26,6 +35,7 @@ export async function patch(path, { body = null, headers = {} } = {}) {
     credentials,
     headers: {
       'Content-Type': 'application/json',
+      ...defaultHeaders(),
       ...headers,
       'X-XSRF-TOKEN': token,
     },
