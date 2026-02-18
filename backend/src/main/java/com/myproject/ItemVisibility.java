@@ -1,8 +1,7 @@
 package com.myproject;
 
-public enum ItemState {
+public enum ItemVisibility {
     PRIVATE,
     FRIENDS_ONLY,
-    PUBLIC,
-    GIVE_AWAY
+    PUBLIC
 }

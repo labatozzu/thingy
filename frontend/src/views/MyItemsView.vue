@@ -28,7 +28,12 @@ onMounted(async () => {
     <p v-else-if="error" class="error">{{ error }}</p>
     <p v-else-if="items.length === 0" class="empty">No items yet.</p>
     <div v-else class="card-grid">
-      <div v-for="item in items" :key="item.id" class="card">
+      <router-link
+        v-for="item in items"
+        :key="item.id"
+        :to="`/items/${item.id}`"
+        class="card"
+      >
         <div class="card-photo">
           <img v-if="item.photoUrl" :src="item.photoUrl" :alt="item.title" />
           <div v-else class="photo-placeholder">
@@ -40,7 +45,7 @@ onMounted(async () => {
           </div>
         </div>
         <h3 class="card-title">{{ item.title }}</h3>
-      </div>
+      </router-link>
     </div>
   </div>
 </template>
@@ -69,10 +74,18 @@ onMounted(async () => {
   gap: 1rem;
 }
 .card {
+  display: block;
   border: 1px solid #e0e0e0;
   border-radius: 8px;
   background: #fff;
   overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: box-shadow 0.15s ease;
+}
+.card:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
 }
 .card-photo {
   aspect-ratio: 1;

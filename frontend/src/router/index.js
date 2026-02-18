@@ -4,6 +4,7 @@ import { user, fetchMe } from '../composables/useAuth'
 const routes = [
   { path: '/', name: 'home', component: () => import('../views/HomeView.vue') },
   { path: '/my-items', name: 'my-items', component: () => import('../views/MyItemsView.vue') },
+  { path: '/items/:id', name: 'item-detail', component: () => import('../views/ItemDetailView.vue') },
   { path: '/login', name: 'login', component: () => import('../views/LoginView.vue') },
   { path: '/register', name: 'register', component: () => import('../views/RegisterView.vue') },
   { path: '/terms', name: 'terms', component: () => import('../views/TermsView.vue') },

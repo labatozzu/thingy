@@ -29,11 +29,8 @@ public class Garment {
     @Column(name = "photo_url")
     private String photoUrl;
 
-    @Column(name = "waist_min", nullable = false)
-    private Integer waistMin;
-
-    @Column(name = "waist_max", nullable = false)
-    private Integer waistMax;
+    @Column(nullable = false)
+    private Integer waist;
 
     @Column(name = "length_in", nullable = false)
     private Integer lengthIn;
@@ -44,7 +41,11 @@ public class Garment {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private ItemState state;
+    private ItemVisibility visibility;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private ItemStatus status;
 
     public Garment() {
     }
@@ -81,20 +82,12 @@ public class Garment {
         this.photoUrl = photoUrl;
     }
 
-    public Integer getWaistMin() {
-        return waistMin;
+    public Integer getWaist() {
+        return waist;
     }
 
-    public void setWaistMin(Integer waistMin) {
-        this.waistMin = waistMin;
-    }
-
-    public Integer getWaistMax() {
-        return waistMax;
-    }
-
-    public void setWaistMax(Integer waistMax) {
-        this.waistMax = waistMax;
+    public void setWaist(Integer waist) {
+        this.waist = waist;
     }
 
     public Integer getLengthIn() {
@@ -113,11 +106,19 @@ public class Garment {
         this.fitEstimate = fitEstimate;
     }
 
-    public ItemState getState() {
-        return state;
+    public ItemVisibility getVisibility() {
+        return visibility;
     }
 
-    public void setState(ItemState state) {
-        this.state = state;
+    public void setVisibility(ItemVisibility visibility) {
+        this.visibility = visibility;
+    }
+
+    public ItemStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(ItemStatus status) {
+        this.status = status;
     }
 }
