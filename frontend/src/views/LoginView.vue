@@ -64,14 +64,15 @@ onMounted(async () => {
 <style scoped>
 .login {
   background: #fff;
-  padding: 1.5rem;
+  padding: 1rem;
   border-radius: 8px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
   max-width: 24rem;
+  width: 100%;
 }
 .login h1 {
   margin-top: 0;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1rem;
   font-size: 1.5rem;
 }
 .field {
@@ -85,6 +86,7 @@ onMounted(async () => {
 }
 .field input {
   width: 100%;
+  min-height: 44px;
   padding: 0.5rem 0.75rem;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -92,7 +94,9 @@ onMounted(async () => {
 }
 .login button[type="submit"] {
   margin-top: 0.5rem;
-  padding: 0.5rem 1rem;
+  min-height: 44px;
+  padding: 0.75rem 1rem;
+  width: 100%;
   background: #1a1a2e;
   color: #fff;
   border: none;
@@ -100,7 +104,8 @@ onMounted(async () => {
   cursor: pointer;
   font-size: 1rem;
 }
-.login button[type="submit"]:hover:not(:disabled) {
+.login button[type="submit"]:hover:not(:disabled),
+.login button[type="submit"]:active:not(:disabled) {
   background: #16213e;
 }
 .login button[type="submit"]:disabled {
@@ -111,9 +116,24 @@ onMounted(async () => {
   color: #c00;
   margin: 0.5rem 0 0;
 }
+.login > p:last-of-type {
+  margin-top: 1rem;
+}
 .login a {
   color: #1a1a2e;
-  margin-top: 1rem;
   display: inline-block;
+  padding: 0.5rem 0.25rem;
+  margin: -0.5rem -0.25rem;
+}
+@media (min-width: 640px) {
+  .login {
+    padding: 1.5rem;
+  }
+  .login h1 {
+    margin-bottom: 1.25rem;
+  }
+  .login button[type="submit"] {
+    width: auto;
+  }
 }
 </style>

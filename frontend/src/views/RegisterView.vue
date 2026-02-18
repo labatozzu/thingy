@@ -159,14 +159,15 @@ onMounted(async () => {
 <style scoped>
 .register {
   background: #fff;
-  padding: 1.5rem;
+  padding: 1rem;
   border-radius: 8px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
   max-width: 24rem;
+  width: 100%;
 }
 .register h1 {
   margin-top: 0;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1rem;
   font-size: 1.5rem;
 }
 .field {
@@ -184,6 +185,7 @@ onMounted(async () => {
 .field input[type="number"],
 .field select {
   width: 100%;
+  min-height: 44px;
   padding: 0.5rem 0.75rem;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -195,20 +197,27 @@ onMounted(async () => {
 }
 .input-with-toggle input {
   flex: 1;
-  padding-right: 2.5rem;
+  min-height: 44px;
+  padding-right: 3rem;
 }
 .toggle-password {
   position: absolute;
-  right: 0.5rem;
-  top: 50%;
-  transform: translateY(-50%);
+  right: 0;
+  top: 0;
+  bottom: 0;
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: none;
   border: none;
   cursor: pointer;
-  padding: 0.25rem;
+  padding: 0;
   color: #666;
 }
-.toggle-password:hover {
+.toggle-password:hover,
+.toggle-password:active {
   color: #333;
 }
 .field.terms .checkbox-label {
@@ -221,6 +230,8 @@ onMounted(async () => {
 .field.terms input[type="checkbox"] {
   margin-top: 0.25rem;
   flex-shrink: 0;
+  min-width: 20px;
+  min-height: 20px;
 }
 .field.terms a {
   color: #1a1a2e;
@@ -228,7 +239,9 @@ onMounted(async () => {
 }
 .register button[type="submit"] {
   margin-top: 0.5rem;
-  padding: 0.5rem 1rem;
+  min-height: 44px;
+  padding: 0.75rem 1rem;
+  width: 100%;
   background: #1a1a2e;
   color: #fff;
   border: none;
@@ -236,7 +249,8 @@ onMounted(async () => {
   cursor: pointer;
   font-size: 1rem;
 }
-.register button[type="submit"]:hover:not(:disabled) {
+.register button[type="submit"]:hover:not(:disabled),
+.register button[type="submit"]:active:not(:disabled) {
   background: #16213e;
 }
 .register button[type="submit"]:disabled {
@@ -253,5 +267,18 @@ onMounted(async () => {
 .register a {
   color: #1a1a2e;
   display: inline-block;
+  padding: 0.5rem 0.25rem;
+  margin: -0.5rem -0.25rem;
+}
+@media (min-width: 640px) {
+  .register {
+    padding: 1.5rem;
+  }
+  .register h1 {
+    margin-bottom: 1.25rem;
+  }
+  .register button[type="submit"] {
+    width: auto;
+  }
 }
 </style>

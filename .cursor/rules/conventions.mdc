@@ -24,6 +24,7 @@ alwaysApply: true
 ## Design & UX
 
 - **Familiar patterns:** All design and implementation decisions must aim for user experience that is familiar from existing popular web apps (e.g. Facebook, Twitter, Instagram, Gmail). Use common patterns for navigation, forms, cards, modals, and feedback so users feel at home.
+- **Mobile first:** All frontend implementation must be mobile first. Start with base styles for small screens (single column, stacked layout, touch targets ≥44px), then add `@media (min-width: ...)` to enhance for tablet and desktop. Ensure layouts scale up, not down.
 
 ## General
 

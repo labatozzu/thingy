@@ -56,7 +56,7 @@ watch(() => route.path, () => {
           <span class="user">Logged in as {{ user.email }}</span>
           <button type="button" class="btn" @click="logout">Logout</button>
         </template>
-        <router-link v-else to="/login">Login</router-link>
+        <router-link v-else to="/login" class="nav-link-btn">Login</router-link>
       </nav>
     </header>
     <main class="main">
@@ -73,6 +73,7 @@ body {
   margin: 0;
   font-family: system-ui, -apple-system, sans-serif;
   background: #f5f5f5;
+  -webkit-tap-highlight-color: transparent;
 }
 .app {
   min-height: 100vh;
@@ -83,7 +84,11 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.75rem 1.5rem;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  padding-left: max(1rem, env(safe-area-inset-left));
+  padding-right: max(1rem, env(safe-area-inset-right));
+  padding-top: max(0.75rem, env(safe-area-inset-top));
   background: #1a1a2e;
   color: #eee;
 }
@@ -91,29 +96,45 @@ body {
   font-weight: 700;
   color: #eee;
   text-decoration: none;
+  font-size: 1.5rem;
 }
-.logo:hover {
+.logo:hover,
+.logo:active {
   color: #fff;
 }
 .nav {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.5rem;
 }
 .nav a {
   color: #b8b8d0;
   text-decoration: none;
 }
 .nav a:hover,
+.nav a:active,
 .nav a.router-link-active {
   color: #fff;
+}
+.nav-link-btn {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 0.5rem;
 }
 .user {
   color: #b8b8d0;
   font-size: 0.9rem;
+  display: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 8rem;
 }
 .btn {
-  padding: 0.4rem 0.75rem;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0.5rem 0.75rem;
   background: #16213e;
   color: #eee;
   border: 1px solid #0f3460;
@@ -132,10 +153,11 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   gap: 5px;
-  width: 32px;
-  height: 32px;
-  padding: 0;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 10px;
   background: none;
   border: none;
   cursor: pointer;
@@ -143,11 +165,24 @@ body {
 }
 .hamburger span {
   display: block;
-  width: 100%;
+  width: 22px;
   height: 2px;
   background: currentColor;
 }
-.hamburger:hover {
+.hamburger:hover,
+.hamburger:active {
+  color: #fff;
+}
+.menu-dropdown a {
+  display: block;
+  min-height: 44px;
+  padding: 0.75rem 1rem;
+  color: #b8b8d0;
+  text-decoration: none;
+}
+.menu-dropdown a:hover,
+.menu-dropdown a:active {
+  background: #1a1a2e;
   color: #fff;
 }
 .menu-dropdown {
@@ -161,21 +196,33 @@ body {
   border-radius: 4px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
-.menu-dropdown a {
-  display: block;
-  padding: 0.5rem 1rem;
-  color: #b8b8d0;
-  text-decoration: none;
-}
-.menu-dropdown a:hover {
-  background: #1a1a2e;
-  color: #fff;
-}
 .main {
   flex: 1;
-  padding: 1.5rem;
+  padding: 1rem;
+  padding-left: max(1rem, env(safe-area-inset-left));
+  padding-right: max(1rem, env(safe-area-inset-right));
+  padding-bottom: max(1rem, env(safe-area-inset-bottom));
   max-width: 48rem;
   margin: 0 auto;
   width: 100%;
+}
+@media (min-width: 640px) {
+  .header {
+    padding: 0.75rem 1.5rem;
+    padding-left: max(1.5rem, env(safe-area-inset-left));
+    padding-right: max(1.5rem, env(safe-area-inset-right));
+  }
+  .user {
+    display: inline;
+    max-width: 12rem;
+  }
+  .main {
+    padding: 1.5rem;
+  }
+}
+@media (min-width: 768px) {
+  .user {
+    max-width: none;
+  }
 }
 </style>

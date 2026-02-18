@@ -32,9 +32,14 @@ onMounted(async () => {
 <style scoped>
 .home {
   background: #fff;
-  padding: 1.5rem;
+  padding: 1rem;
   border-radius: 8px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+@media (min-width: 640px) {
+  .home {
+    padding: 1.5rem;
+  }
 }
 .error {
   color: #c00;

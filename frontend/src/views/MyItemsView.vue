@@ -35,7 +35,7 @@ onMounted(async () => {
         class="card"
       >
         <div class="card-photo">
-          <img v-if="item.photoUrl" :src="item.photoUrl" :alt="item.title" />
+          <img v-if="item.photoUrl" :src="item.photoUrl" :alt="item.title" loading="lazy" />
           <div v-else class="photo-placeholder">
             <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
               <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
@@ -53,13 +53,13 @@ onMounted(async () => {
 <style scoped>
 .my-items {
   background: #fff;
-  padding: 1.5rem;
+  padding: 1rem;
   border-radius: 8px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 .my-items h1 {
   margin-top: 0;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1rem;
   font-size: 1.5rem;
 }
 .error {
@@ -70,7 +70,7 @@ onMounted(async () => {
 }
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: 1fr;
   gap: 1rem;
 }
 .card {
@@ -83,9 +83,27 @@ onMounted(async () => {
   color: inherit;
   cursor: pointer;
   transition: box-shadow 0.15s ease;
+  min-height: 44px;
 }
-.card:hover {
+.card:hover,
+.card:active {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+@media (min-width: 640px) {
+  .my-items {
+    padding: 1.5rem;
+  }
+  .my-items h1 {
+    margin-bottom: 1.25rem;
+  }
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 1024px) {
+  .card-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 .card-photo {
   aspect-ratio: 1;
