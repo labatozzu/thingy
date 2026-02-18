@@ -21,6 +21,10 @@ alwaysApply: true
 - **Forms:** Use `@submit.prevent`, `v-model`, `ref()` for fields. Show loading state and generic error messages.
 - **Styling:** Scoped CSS in components. Shared styles in `App.vue`. Color palette: `#1a1a2e`, `#16213e`, `#b8b8d0` for header/nav.
 
+## Design & UX
+
+- **Familiar patterns:** All design and implementation decisions must aim for user experience that is familiar from existing popular web apps (e.g. Facebook, Twitter, Instagram, Gmail). Use common patterns for navigation, forms, cards, modals, and feedback so users feel at home.
+
 ## General
 
 - **Error handling:** Catch errors, show user-friendly message. Don't expose stack traces or internal details.

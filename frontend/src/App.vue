@@ -1,17 +1,32 @@
 <script setup>
-import { onMounted, watch } from 'vue'
+import { ref, onMounted, watch, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { useAuth } from './composables/useAuth'
 
 const route = useRoute()
 const { user, fetchMe, logout } = useAuth()
+const menuOpen = ref(false)
+
+function toggleMenu() {
+  menuOpen.value = !menuOpen.value
+}
+
+function closeMenu() {
+  menuOpen.value = false
+}
 
 onMounted(() => {
   fetchMe()
+  document.addEventListener('click', closeMenu)
+})
+
+onUnmounted(() => {
+  document.removeEventListener('click', closeMenu)
 })
 
 watch(() => route.path, () => {
   fetchMe()
+  closeMenu()
 })
 </script>
 
@@ -20,7 +35,23 @@ watch(() => route.path, () => {
     <header class="header">
       <router-link to="/" class="logo">My App</router-link>
       <nav class="nav">
-        <router-link to="/">Home</router-link>
+        <div class="hamburger-wrapper" @click.stop>
+          <button
+            type="button"
+            class="hamburger"
+            :aria-expanded="menuOpen"
+            aria-label="Menu"
+            @click="toggleMenu"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+          <div v-if="menuOpen" class="menu-dropdown">
+            <router-link to="/" @click="closeMenu">Home</router-link>
+            <router-link v-if="user" to="/my-items" @click="closeMenu">My items</router-link>
+          </div>
+        </div>
         <template v-if="user">
           <span class="user">Logged in as {{ user.email }}</span>
           <button type="button" class="btn" @click="logout">Logout</button>
@@ -92,6 +123,52 @@ body {
 }
 .btn:hover {
   background: #0f3460;
+  color: #fff;
+}
+.hamburger-wrapper {
+  position: relative;
+}
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #eee;
+}
+.hamburger span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: currentColor;
+}
+.hamburger:hover {
+  color: #fff;
+}
+.menu-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 0.5rem;
+  min-width: 10rem;
+  padding: 0.5rem 0;
+  background: #16213e;
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+.menu-dropdown a {
+  display: block;
+  padding: 0.5rem 1rem;
+  color: #b8b8d0;
+  text-decoration: none;
+}
+.menu-dropdown a:hover {
+  background: #1a1a2e;
   color: #fff;
 }
 .main {

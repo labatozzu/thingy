@@ -22,7 +22,8 @@ This document provides context about the myproject codebase so AI can respect ex
 
 ## Before Making Changes
 
-1. **Auth-related changes:** Read `openspec/specs/login/spec.md` and `.cursor/rules/architecture.mdc`. Preserve session-based auth, CSRF, and generic error messages (no email enumeration).
-2. **New API endpoints:** Follow existing patterns in `AuthController` and `MessageController`. Public routes must be added to `SecurityConfig` permit list.
-3. **Frontend API calls:** Use `src/api/client.js` (get/post) — it handles credentials and CSRF for POST. Never bypass it for authenticated requests.
-4. **New features:** Consider using OpenSpec (`/opsx:new` or `/opsx:ff`) to create proposal → specs → design → tasks before implementing.
+1. **UX:** Aim for familiar patterns from popular web apps. See `.cursor/rules/conventions.mdc` — Design & UX.
+2. **Auth-related changes:** Read `openspec/specs/login/spec.md` and `.cursor/rules/architecture.mdc`. Preserve session-based auth, CSRF, and generic error messages (no email enumeration).
+3. **New API endpoints:** Follow existing patterns in `AuthController` and `MessageController`. Public routes must be added to `SecurityConfig` permit list.
+4. **Frontend API calls:** Use `src/api/client.js` (get/post) — it handles credentials and CSRF for POST. Never bypass it for authenticated requests.
+5. **New features:** Consider using OpenSpec (`/opsx:new` or `/opsx:ff`) to create proposal → specs → design → tasks before implementing.
