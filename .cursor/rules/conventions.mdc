@@ -26,6 +26,15 @@ alwaysApply: true
 - **Familiar patterns:** All design and implementation decisions must aim for user experience that is familiar from existing popular web apps (e.g. Facebook, Twitter, Instagram, Gmail). Use common patterns for navigation, forms, cards, modals, and feedback so users feel at home.
 - **Mobile first:** All frontend implementation must be mobile first. Start with base styles for small screens (single column, stacked layout, touch targets ≥44px), then add `@media (min-width: ...)` to enhance for tablet and desktop. Ensure layouts scale up, not down.
 
+## Security
+
+- **Secure coding:** All implementation must follow secure coding principles and consider the OWASP Top 10 (injection, broken auth, sensitive data exposure, XXE, broken access control, misconfiguration, XSS, insecure deserialization, vulnerable components, insufficient logging). Validate input, sanitize output, use parameterized queries, enforce auth on sensitive endpoints.
+- **Input validation:** Validate all user input on the backend. Enforce min/max for numbers (e.g. waist 24–48, length 26–38). Validate email format. Reject invalid or out-of-range values with 400.
+- **Password policy:** Registration must enforce minimum length (≥8 chars). Reject weak passwords before hashing.
+- **Access control:** For owner-scoped resources (e.g. items), always use repository methods that filter by owner (e.g. `findByIdAndOwner_Id`). Never expose another user's data.
+- **User-provided URLs:** When storing URLs (e.g. photoUrl) from user input, validate scheme (https only) and domain. Prefer storing files in own storage (S3/R2) over external URLs.
+- **Frontend:** Never use `v-html` or `innerHTML` with user-controlled content. Use Vue's `{{ }}` for safe escaping.
+
 ## General
 
 - **Error handling:** Catch errors, show user-friendly message. Don't expose stack traces or internal details.

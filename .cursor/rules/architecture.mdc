@@ -43,6 +43,11 @@ alwaysApply: true
 
 - Allowed origins: `localhost:5173`, `127.0.0.1:5173`, `thingylingie.fly.dev`
 - Credentials: `true` (required for cookies/sessions)
+- **Allowed headers:** Prefer explicit list (e.g. `Content-Type`, `X-XSRF-TOKEN`, `Accept`, `Accept-Language`) over `*` when possible.
+
+## Security Headers
+
+- Add hardening headers in `SecurityConfig`: `X-Content-Type-Options: nosniff`, `X-Frame-Options`, `Content-Security-Policy`. Consider `Strict-Transport-Security` for production HTTPS.
 
 ## Non-Goals (do not add without explicit spec)
 
