@@ -6,7 +6,7 @@ A **circular economy application** for clothing that helps users:
 
 - **A) Find pre-owned clothes** — Browse and acquire secondhand items from other users
 - **B) Find new owners for clothes** — List and pass on clothes they no longer need
-- **C) Notify the right-sized user** — When a garment doesn't fit its owner and gets listed, the app notifies users whose size and style match it about the potentially fitting garment
+- **C) App-driven matching** — The app matches items to users and recommends. When a garment is listed, the app finds right-sized users and notifies them. Users receive recommendations from the app, not manual browsing.
 - **D) Personal registry** — Users can use the app as a registry of garments they own. Each item has a visibility state: private, friends only, public, or give away
 
 The app extends the life of garments, reduces waste, and supports sustainable consumption. Proactive notifications help right-sized users discover garments before others. **Location-aware:** the app prioritizes close-proximity connections to make handoffs easier and more sustainable (less shipping).
@@ -20,7 +20,7 @@ The app extends the life of garments, reduces waste, and supports sustainable co
 | **Acquire** | Users discover and obtain pre-owned clothes listed by others |
 | **Pass on** | Users list their own clothes and connect with people who want them |
 | **Registry** | Personal inventory of owned garments. Each item has a state: **private** (owner only), **friends only**, **public**, or **give away** |
-| **Match & notify** | When a garment doesn't fit the owner and is listed, the app notifies right-sized users (by size and style) about the potentially fitting garment |
+| **Match & notify** | The app matches users to items and recommends. When a garment is listed, the app (not users) finds right-sized users and notifies them. Users receive recommendations from the app. |
 | **Location-aware** | Prioritizes close-proximity connections so users can meet or exchange locally |
 | **Connect (friend)** | Users can connect with each other; friends get enhanced access to each other's listings (e.g. early view, priority in matches) |
 
@@ -28,7 +28,7 @@ The app extends the life of garments, reduces waste, and supports sustainable co
 
 **Privacy:** Users control how detailed their body measurements are. Options may range from basic (e.g. S/M/L) to precise (e.g. chest, waist, inseam). More detail enables better matching; less detail preserves privacy.
 
-**Fit estimate:** When listing a garment, the user can indicate their own estimate of whether it runs true to size, runs small, or runs big. This helps others judge if the item might fit them.
+**Fit estimate:** When listing a garment, the user indicates whether it runs true to size, runs small, or runs big. The app uses this (along with user size profiles) to match items to users and recommend. The app does the matching; users receive recommendations.
 
 **Item visibility states:** Each garment in a user's registry has a state controlling who can see it:
 - **Private** — Owner only
@@ -73,10 +73,10 @@ The app extends the life of garments, reduces waste, and supports sustainable co
 
 | Feature | Description |
 |---------|-------------|
-| **Browse pre-owned jeans** | Discover jeans listed by other users (visibility depends on item state) |
+| **Browse / receive recommendations** | Users discover jeans via app recommendations (matched to their size and style). Visibility depends on item state. |
 | **List jeans** | Add jeans to your registry. Set state per item: private, friends only, public, or give away. For each item, the user can give their own estimate of fit: **true to size**, **runs small**, or **runs big** |
 | **Size & style profile** | Users set their size and style preferences for jeans. Each user decides how detailed their body measurements are (e.g. basic S/M/L vs. precise measurements) to support matching |
-| **Match & notify** | When a non-fitting pair of jeans is listed, notify right-sized users whose style matches it about the potentially fitting garment |
+| **Match & notify** | The app matches items to users and recommends. When jeans are listed, the app finds right-sized users (using size profiles and fit estimate) and notifies them. Users receive app-generated recommendations, not manual browsing. |
 | **Location-aware matching** | Prioritize close-proximity connections; nearby users surface first |
 | **Connect (friend)** | Users can friend each other; friends get enhanced access to each other's jeans listings (e.g. early view, priority in matches) |
 
