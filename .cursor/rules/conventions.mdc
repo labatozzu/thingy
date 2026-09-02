@@ -39,4 +39,3 @@ alwaysApply: true
 
 - **Error handling:** Catch errors, show user-friendly message. Don't expose stack traces or internal details.
 - **Credentials:** All API requests use `credentials: 'include'` for cookie-based sessions.
-- **OpenSpec:** Use OpenSpec for new features when appropriate. See `openspec/specs/` and `AGENTS.md`.
