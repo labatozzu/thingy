@@ -1,8 +1,3 @@
----
-description: Architecture, auth, API patterns, and security decisions
-alwaysApply: true
----
-
 # Architecture and Patterns
 
 ## Authentication

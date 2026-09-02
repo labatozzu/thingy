@@ -1,8 +1,3 @@
----
-description: Coding conventions and patterns for backend and frontend
-alwaysApply: true
----
-
 # Conventions
 
 ## Backend (Java / Spring Boot)
