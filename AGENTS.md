@@ -29,3 +29,13 @@ This document provides context about the myproject codebase so AI can respect ex
 4. **New API endpoints:** Follow existing patterns in `AuthController` and `MessageController`. Public routes must be added to `SecurityConfig` permit list.
 5. **Frontend API calls:** Use `src/api/client.js` (get/post) — it handles credentials and CSRF for POST. Never bypass it for authenticated requests.
 6. **New features:** Plan in conversation before implementing. Follow conventions in `docs/conventions.md`.
+
+## Agent skills
+
+### Issue tracker
+
+Issues and specs for this repository live in GitHub Issues and are managed with the `gh` CLI. See `docs/agents/issue-tracker.md`.
+
+### Domain docs
+
+This is a single-context repository. Domain terms belong in `GLOSSARY.md` and architectural decisions belong in `docs/adr/`. See `docs/agents/domain.md`.

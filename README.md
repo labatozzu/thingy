@@ -51,3 +51,21 @@ java -jar target/backend-1.0.0-SNAPSHOT.jar
 ```
 
 Open http://localhost:8080. The same JAR serves the API and the Vue app.
+
+## AI-assisted development
+
+This repository includes selected, repo-local skills from [Matt Pocock's skills repository](https://github.com/mattpocock/skills) for use with OpenCode. The skills are copied into `.agents/skills/` and tracked in `skills-lock.json` so the workflow is reproducible.
+
+Use `/grill-with-docs` before substantial design work, `/to-spec` and `/to-tickets` to turn agreed work into GitHub Issues, and `/implement` to build it with testing and review. The project-specific rules in `AGENTS.md` remain authoritative for Spring Boot, Vue, security, and repository conventions.
+
+### Updating the skills
+
+Review updates before committing them:
+
+```bash
+npx skills@latest update --project
+npx skills@latest add mattpocock/skills --agent opencode --skill setup-matt-pocock-skills --skill grill-with-docs --skill to-spec --skill to-tickets --skill implement --skill tdd --skill code-review --skill diagnosing-bugs --skill retro --skill improve-codebase-architecture --skill grilling --skill domain-modeling --skill codebase-design --skill writing-for-agents --copy --yes
+git diff
+```
+
+Re-run the `add` command when Matt adds a new skill that you want to adopt. Do not install the skills globally for this repository.
